@@ -170,3 +170,323 @@ If changes are not correct make the necessary changes and repeat tasks
 Hint: Your output should look like the following:  
 
 ![final output](./img/final_output.png)
+
+
+:point_right: Task 15: Creating a new branch and checking out a branch
+
+    Create a new directory named branch_test:
+
+```bash
+mkdir branch_test
+cd branch_test
+```
+
+Create a new file named testfile.txt:
+
+```bash
+touch testfile.txt
+```
+
+Add some content to testfile.txt:
+
+```bash
+echo "This is a test file." > testfile.txt
+```
+
+Stage and commit the file:
+
+```bash
+git add testfile.txt
+git commit -m "Initial commit with testfile.txt"
+```
+
+Create a new branch named feature-branch:
+
+```bash
+git branch feature-branch
+```
+
+Switch to the new branch:
+
+```bash
+git checkout feature-branch
+```
+
+You can also combine the branch creation and checkout into a single command:
+
+```bash
+git checkout -b feature-branch
+```
+
+Verify that you are on the feature-branch:
+
+```bash
+git branch
+```
+
+The current branch will be highlighted with an asterisk (*).
+
+:point_right: Task 16: Stashing and popping stash in Git
+
+While still in the branch_test directory, add another line to testfile.txt:
+
+```bash
+echo "This line is for stash testing." >> testfile.txt
+```
+
+Check the status to see the unstaged changes:
+
+```bash
+git status -u
+```
+
+Stash the changes temporarily:
+
+```bash
+git stash
+```
+
+This command will store your changes and revert the working directory to the last commit.
+
+Verify that the changes have been stashed:
+
+```bash
+git status -u
+```
+The working directory should be clean.
+
+Pop the stash to reapply the changes:
+
+```bash
+git stash pop
+```
+
+This command will apply the stashed changes back to your working directory.
+
+Verify that the changes have been reapplied:
+
+```bash
+git status -u
+```
+
+You should see the changes as unstaged again.
+
+:point_right: Task 17: Committing your changes
+
+Stage the modified testfile.txt:
+
+```bash
+git add testfile.txt
+```
+Commit the changes with a meaningful commit message:
+
+```bash
+git commit -m "Added a line for stash testing"
+```
+
+Verify that the commit was successful:
+
+```bash
+git log --oneline
+```
+
+You should see your latest commit at the top of the log.
+
+:point_right: Task 18: Ignoring files in Git
+
+Create a new directory named ignore_test and navigate into it:
+
+```bash
+mkdir ignore_test
+cd ignore_test
+```
+Initialize a new Git repository:
+
+Create some test files:
+
+```bash
+touch file1.txt file2.log secret.txt
+```
+
+Create a .gitignore file:
+
+```bash
+touch .gitignore
+```
+
+Open .gitignore in a text editor and add the following lines:
+
+```
+*.log
+secret.txt
+!important.log
+```
+The first line ignores all .log files.
+The second line ignores the secret.txt file.
+The third line negates the .log rule for a file named important.log.
+
+Save and close the .gitignore file.
+
+Verify the ignored files:
+
+```bash
+git status
+```
+
+You should see that file2.log and secret.txt are ignored, but important.log is not.
+
+Create the important.log file and check the status again:
+
+```bash
+touch important.log
+git status
+```
+You should see important.log as an unstaged file, despite the .gitignore rule.
+
+:point_right: Task 19: Git log & history
+
+Use the following command to see the Git log in a simple format:
+
+```bash
+git log
+```
+For a more concise view, showing just the commit messages:
+
+```bash
+git log --oneline
+```
+To see a graphical representation of the commit history, run:
+
+```bash
+git log --graph --oneline --all --decorate
+```
+This command provides a visual representation of branches and merges.
+
+Explore additional options for the Git log by running:
+
+```bash
+git log --help
+```
+:point_right: Task 20: Merging
+
+In your branch_test directory, make sure you are on the feature-branch:
+
+```bash
+git checkout feature-branch
+```
+Make some changes to testfile.txt:
+
+```bash
+echo "This is a change on the feature branch." >> testfile.txt
+```
+
+Stage and commit the changes:
+
+```bash
+git add testfile.txt
+git commit -m "Feature branch changes"
+```
+
+Switch back to the master branch:
+
+```bash
+git checkout master
+```
+
+Merge the changes from feature-branch into master:
+
+```bash
+git merge feature-branch
+```
+
+Verify the merge:
+
+```bash
+git log --graph --oneline --all --decorate
+```
+
+You should see the merge in the history.
+
+:point_right: Task 21: Syncing with a remote
+
+Fetch the latest changes from the remote repository:
+
+```bash
+git fetch origin
+```
+Pull the latest changes from the remote to your local branch:
+
+```bash
+git pull origin master
+```
+
+Verify that your local branch is up-to-date with the remote:
+
+```bash
+git status
+```
+You should see a message indicating that your branch is up-to-date.
+
+:point_right: Task 22: Resolving merge conflicts
+
+Create a conflict by modifying testfile.txt in both the master and feature-branch branches.
+
+On the master branch, make a change:
+
+```bash
+echo "Change on master branch." >> testfile.txt
+git commit -am "Change on master"
+```
+
+Switch to the feature-branch and make a different change:
+
+```bash
+git checkout feature-branch
+echo "Different change on feature branch." >> testfile.txt
+git commit -am "Change on feature branch"
+```
+
+Switch back to the master branch and try to merge feature-branch:
+
+```bash
+git checkout master
+git merge feature-branch
+```
+
+Git will report a conflict.
+
+Open testfile.txt to resolve the conflict. The conflicting areas will be marked with <<<<<<, ======, and >>>>>>. Edit the file to resolve the conflict.
+
+After resolving the conflict, stage the changes:
+
+```bash
+git add testfile.txt
+```
+
+Commit the resolution:
+
+```bash
+git commit -m "Resolved merge conflict"
+```
+:point_right: Task 23: Creating a pull request
+
+Push your feature-branch to the remote repository:
+
+```bash
+git push origin feature-branch
+```
+Navigate to the repository on GitHub.
+
+You will see an option to create a pull request for feature-branch. Click on it.
+
+Review the changes in the pull request and add a description.
+
+Submit the pull request for review.
+
+After the pull request is reviewed and approved, merge it into the master branch on GitHub.
+
+Pull the changes to your local repository to sync:
+
+```bash
+git pull origin master
+```
